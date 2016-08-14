@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GPS_Alarm</string>
+    <string name="your_gps_alarm_is_set">Your GPS Alarm Is Set</string>
+    <string name="done">Done</string>
 </resources>
