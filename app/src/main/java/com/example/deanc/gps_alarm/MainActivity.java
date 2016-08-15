@@ -1,26 +1,28 @@
 package com.example.deanc.gps_alarm;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
     public static MapFragment mapFrag;
     Button destination, start_tracking;
-    Tracker gpsTracker;
-
-    GoogleMap map;
-    Double userLat, userLon;
-
     DataHandler DH;
 
     @Override
@@ -28,7 +30,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         DH = DataHandler.getInstance();
+        DH.mContext = getBaseContext();
 
         mapFrag = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         destination = (Button) findViewById(R.id.destination);
@@ -41,17 +46,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         // DH.userLon = -73.673233;
         // userLocation = new LatLng(userLat,userLon);
 
-        gpsTracker = new Tracker(MainActivity.this);
+        DH.getLocation();
 
-        if (gpsTracker.canGetLocation()) {
 
-            DH.userLat = gpsTracker.getLatitude();
-            DH.userLon = gpsTracker.getLongitude();
-            DH.userLocation = new LatLng(userLat, userLon);
-
-        } else {
-            gpsTracker.showSettingsAlert();
-        }
 
 //        LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
 //        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -101,6 +98,35 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
 
+                if (DH.userDestination != null) {
+                    DH.updater.start();
+
+                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                    builder.include(DH.userLocation);
+                    builder.include(DH.userDestination);
+                    LatLngBounds bounds = builder.build();
+                    int padding = 5;
+                    final CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+
+                    mapFrag.getMapAsync(new OnMapReadyCallback() {
+                        @Override
+                        public void onMapReady(GoogleMap map) {
+                            map.moveCamera(cu);
+                        }
+                    });
+
+                    int secondsDelayed = 7;
+                    new Handler().postDelayed(new Runnable() {
+
+                        public void run() {
+                            startActivity(new Intent(MainActivity.this, SweetDreams.class));
+                            finish();
+                        }
+                    }, secondsDelayed * 1000);
+
+
+                }
+
             }
         });
 
@@ -116,6 +142,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         map.addMarker(new MarkerOptions()
                 .title("You are Here")
                 .position(DH.userLocation));
+
+        Toast.makeText(MainActivity.this, "Your Current Location", Toast.LENGTH_LONG).show();
 
     }
 

@@ -59,20 +59,22 @@ public class GPS_Tracker extends Service {
 
     protected void getLocation() {
 
-        if (isConnected){
+        if (isConnected) {
 
             locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
 
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
+            if (android.os.Build.VERSION.SDK_INT == 23)
+
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
 
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, (long) 1000, (float) 10, new LocationListener() {
 
@@ -149,10 +151,10 @@ public class GPS_Tracker extends Service {
         @Override
         public void onTick(long millisUntilFinished) {
 
-            if (latitude != 0.0){
+            if (latitude != 0.0) {
                 // childLAT = String.valueOf(latitude);
                 // childLON = String.valueOf(longitude);
-            }else{
+            } else {
                 // childLAT = String.valueOf(location.getLatitude());
                 // childLON = String.valueOf(location.getLongitude());
             }

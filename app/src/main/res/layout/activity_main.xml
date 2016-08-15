@@ -14,7 +14,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Click to Enter a Destination" />
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/rounded_buttons"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/click_to_enter_a_destination"
+        android:textAllCaps="false"
+        android:textColor="#ffffff" />
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map"
@@ -30,7 +36,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Track My Location" />
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_buttons"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/track_my_location_and_set_alarm"
+        android:textAllCaps="false"
+        android:textColor="#ffffff" />
 
 
 </RelativeLayout>

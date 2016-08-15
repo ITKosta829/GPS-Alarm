@@ -1,8 +1,15 @@
 package com.example.deanc.gps_alarm;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,15 +31,20 @@ public class DataHandler {
     protected static final String HTTP = "https://maps.googleapis.com/maps/api/geocode/json?address=";
     protected static final String API_KEY = "&key=AIzaSyDvSzZs2vIJzot6RrRfPwlBWStLLTrkijY";
 
-    public Double userLat, userLon, destinationLat, destinationLon;
+    public Double userLat, userLon, destinationLat, destinationLon, distanceFromDest;
     public String user_address;
     LatLng userLocation, userDestination;
     String URL;
 
+    public CounterClass updater;
+
+    public Context mContext;
+
+    Tracker gpsTracker;
+
     private static DataHandler instance = new DataHandler();
 
     private DataHandler() {
-
 
     }
 
@@ -40,18 +52,34 @@ public class DataHandler {
         return instance;
     }
 
+    public void getLocation(){
+        if (gpsTracker == null) {
+            gpsTracker = new Tracker(mContext);
+        }
+
+        if (gpsTracker.canGetLocation()) {
+
+            userLat = gpsTracker.getLatitude();
+            userLon = gpsTracker.getLongitude();
+            userLocation = new LatLng(userLat, userLon);
+
+        } else {
+            gpsTracker.showSettingsAlert();
+        }
+    }
+
     public void startAsyncTask(){
         URL = HTTP + user_address + API_KEY;
         new getAddressCoordinates().execute(URL);
     }
 
-    public Double calcDistance(Double Start_LAT, Double Start_LON, Double End_LAT, Double End_LON) {
+    public Double calcDistance(LatLng start, LatLng end) {
 
         final int R = 6371; // Radius of the earth
-        Double latDistance = toRad(End_LAT - Start_LAT);
-        Double lonDistance = toRad(End_LON - Start_LON);
+        Double latDistance = toRad(end.latitude - start.latitude);
+        Double lonDistance = toRad(end.longitude - start.longitude);
         Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) +
-                Math.cos(toRad(Start_LAT)) * Math.cos(toRad(End_LAT)) *
+                Math.cos(toRad(start.latitude)) * Math.cos(toRad(end.latitude)) *
                         Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
         Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         Double distance = R * c;
@@ -71,6 +99,28 @@ public class DataHandler {
 
     private static Double toRad(Double value) {
         return value * Math.PI / 180;
+    }
+
+    public class CounterClass extends CountDownTimer {
+        public CounterClass(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+            getLocation();
+
+            distanceFromDest = calcDistance(userDestination, userLocation);
+
+
+
+        }
+
+        @Override
+        public void onFinish() {
+            updater.start();
+        }
     }
 
     private class getAddressCoordinates extends AsyncTask<String, String, String> {
@@ -129,24 +179,27 @@ public class DataHandler {
                 JSONObject location = geometry.getJSONObject("location");
 
                 String lat = location.getString("lat");
-                String lon = location.getString("lon");
+                String lon = location.getString("lng");
 
                 destinationLat = Double.parseDouble(lat);
                 destinationLon = Double.parseDouble(lon);
 
                 userDestination = new LatLng(destinationLat, destinationLon);
 
-//                mapFrag.getMapAsync(new OnMapReadyCallback() {
-//                    @Override
-//                    public void onMapReady(GoogleMap map) {
-//                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(userDestination, 17));
-//
-//                        // Markers identify locations on the map.
-//                        map.addMarker(new MarkerOptions()
-//                                .title("Your Destination")
-//                                .position(userDestination));
-//                    }
-//                });
+                MainActivity.mapFrag.getMapAsync(new OnMapReadyCallback() {
+                    @Override
+                    public void onMapReady(GoogleMap map) {
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(userDestination, 17));
+
+                        // Markers identify locations on the map.
+                        map.addMarker(new MarkerOptions()
+                                .title("Your Destination")
+                                .position(userDestination));
+
+                        Toast.makeText(mContext, "Your Destination Location", Toast.LENGTH_LONG).show();
+                        updater = new CounterClass(600000, 300000);
+                    }
+                });
 
             } catch (Exception e) {
                 e.printStackTrace();

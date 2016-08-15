@@ -6,6 +6,8 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -49,6 +51,10 @@ public class DestinationAddress extends DialogFragment{
         city = (EditText) v.findViewById(R.id.city_entry);
         state = (EditText) v.findViewById(R.id.state_entry);
         zip = (EditText) v.findViewById(R.id.zip_entry);
+
+        street.requestFocus();
+        state.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+        zip.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         AlertDialog.Builder b;
         b = new AlertDialog.Builder(getActivity());

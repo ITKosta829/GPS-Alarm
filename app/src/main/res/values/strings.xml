@@ -2,4 +2,6 @@
     <string name="app_name">GPS_Alarm</string>
     <string name="your_gps_alarm_is_set">Your GPS Alarm Is Set</string>
     <string name="done">Done</string>
+    <string name="click_to_enter_a_destination">Click to Enter a Destination</string>
+    <string name="track_my_location_and_set_alarm">Track My Location and Set Alarm</string>
 </resources>
