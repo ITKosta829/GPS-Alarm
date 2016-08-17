@@ -109,6 +109,7 @@ public class Tracker extends Service implements LocationListener {
                             if (location != null) {
                                 latitude = location.getLatitude();
                                 longitude = location.getLongitude();
+                                Log.d("GPS Enabled", "GPS Enabled " + latitude);
                             }
                         }
                     }
