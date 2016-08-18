@@ -6,10 +6,10 @@ package com.example.deanc.gps_alarm;
 public class LIRR_Station {
 
     String NAME;
-    String LAT;
-    String LON;
+    Double LAT;
+    Double LON;
 
-    public LIRR_Station(String NAME, String LAT, String LON) {
+    public LIRR_Station(String NAME, Double LAT, Double LON) {
         this.NAME = NAME;
         this.LAT = LAT;
         this.LON = LON;
@@ -23,19 +23,19 @@ public class LIRR_Station {
         this.NAME = NAME;
     }
 
-    public String getLAT() {
+    public Double getLAT() {
         return LAT;
     }
 
-    public void setLAT(String LAT) {
+    public void setLAT(Double LAT) {
         this.LAT = LAT;
     }
 
-    public String getLON() {
+    public Double getLON() {
         return LON;
     }
 
-    public void setLON(String LON) {
+    public void setLON(Double LON) {
         this.LON = LON;
     }
 }

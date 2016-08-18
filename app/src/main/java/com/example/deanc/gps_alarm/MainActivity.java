@@ -18,7 +18,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
     public static MapFragment mapFrag;
-    Button destinationAddress, destinationCoordinates, start_tracking, cancel;
+    Button destinationAddress, destinationCoordinates, start_tracking, cancel, lirr;
     DataHandler DH;
 
     @Override
@@ -26,7 +26,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        // setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         DH = DataHandler.getInstance();
         DH.mContext = getBaseContext();
@@ -36,6 +36,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         destinationAddress = (Button) findViewById(R.id.destination);
         destinationCoordinates = (Button) findViewById(R.id.coordinates);
         start_tracking = (Button) findViewById(R.id.start_tracking);
+        lirr = (Button) findViewById(R.id.lirr);
         cancel = (Button) findViewById(R.id.cancel);
         start_tracking.setEnabled(false);
 
@@ -43,6 +44,15 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         DH.getLocation();
         DH.startLIRR_AsyncTask();
+
+        lirr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DestinationLIRRStation DLR = new DestinationLIRRStation();
+                DLR.show(getFragmentManager(), "display");
+                start_tracking.setEnabled(true);
+            }
+        });
 
         destinationAddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,16 +92,35 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                             map.moveCamera(cu);
                         }
                     });
-
                 }
-
             }
         });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DH.updater.cancel();
+
+                DH.userDestination = null;
+                
+                if (DH.updater != null) DH.updater.cancel();
+
+                if (DH.v != null) {
+                    DH.v.cancel();
+                    DH.r.stop();
+                }
+
+                mapFrag.getMapAsync(new OnMapReadyCallback() {
+                    @Override
+                    public void onMapReady(GoogleMap map) {
+                        map.clear();
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(DH.userLocation, 17));
+
+                        map.addMarker(new MarkerOptions()
+                                .title("You are Here")
+                                .position(DH.userLocation));
+
+                    }
+                });
             }
         });
 
@@ -109,8 +138,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 .title("You are Here")
                 .position(DH.userLocation));
 
-        Toast.makeText(MainActivity.this, "Your Current Location", Toast.LENGTH_LONG).show();
-
+        Toast.makeText(MainActivity.this, "Your Current Location", Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -9,64 +9,74 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.deanc.gps_alarm.MainActivity">
 
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/upperButtonRow"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/destination"
-        android:layout_alignTop="@+id/destination"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="center"
-        android:text="OR"
-        android:textColor="#000000"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/coordinates"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/tv"
-        android:background="@drawable/rounded_buttons"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:text="Enter Coordinates"
-        android:textAllCaps="false"
-        android:textColor="#ffffff" />
-
-    <Button
-        android:id="@+id/destination"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_marginBottom="5dp"
-        android:layout_toStartOf="@+id/tv"
-        android:background="@drawable/rounded_buttons"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:text="Enter an Address"
-        android:textAllCaps="false"
-        android:textColor="#ffffff" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/coordinates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_buttons"
+            android:text="Destination&#10;Coordinates"
+            android:textAllCaps="false"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/destination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_buttons"
+            android:text="Destination&#10;Address"
+            android:textAllCaps="false"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/lirr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_buttons"
+            android:gravity="center"
+            android:text="Destination&#10;LIRR Station"
+            android:textAllCaps="false"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_above="@+id/buttonRow"
-        android:layout_below="@+id/destination" />
+        android:layout_above="@+id/lowerButtonRow"
+        android:layout_below="@+id/upperButtonRow" />
 
-    <TableRow
-        android:id="@+id/buttonRow"
-        android:layout_alignParentBottom="true"
+    <LinearLayout
+        android:id="@+id/lowerButtonRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/start_tracking"
-            android:layout_weight=".3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
+            android:layout_weight="1"
             android:background="@drawable/rounded_buttons"
             android:text="@string/track_my_location_and_set_alarm"
             android:textAllCaps="false"
@@ -74,14 +84,17 @@
 
         <Button
             android:id="@+id/cancel"
-            android:layout_weight=".7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:layout_weight="1"
             android:background="@drawable/rounded_buttons"
             android:text="Cancel Alarm"
             android:textAllCaps="false"
             android:textColor="#ffffff" />
 
-    </TableRow>
+
+    </LinearLayout>
 
 
 </RelativeLayout>

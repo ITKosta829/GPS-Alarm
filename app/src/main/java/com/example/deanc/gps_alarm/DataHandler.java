@@ -1,15 +1,13 @@
 package com.example.deanc.gps_alarm;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.location.Location;
-import android.media.MediaPlayer;
+import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -32,6 +30,8 @@ import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -45,11 +45,13 @@ public class DataHandler {
 
     private List<LIRR_Station> stationList;
 
-    public Double userLat, userLon, destinationLat, destinationLon, distanceFromDest;
+    public Double userLat, userLon, destinationLat, destinationLon;
+    double distanceToDest;
     public String user_address;
     LatLng userLocation, userDestination;
     String URL;
-    MediaPlayer MP;
+    public Ringtone r;
+    public Vibrator v;
 
     public CounterClass updater;
     public Context mContext;
@@ -61,7 +63,7 @@ public class DataHandler {
     private static DataHandler instance = new DataHandler();
 
     private DataHandler() {
-
+        stationList = new ArrayList<>();
     }
 
     public static DataHandler getInstance() {
@@ -72,18 +74,14 @@ public class DataHandler {
         return stationList;
     }
 
-    public void addStation(String name, String lat, String lon) {
+    public void addStation(String name, Double lat, Double lon) {
         LIRR_Station station = new LIRR_Station(name, lat, lon);
         stationList.add(station);
     }
 
-    public void deleteStation(int index) {
-        stationList.remove(index);
-    }
-
-    public void getLocation(){
+    public void getLocation() {
         // if (gpsTracker == null) {
-            gpsTracker = new Tracker(mContext);
+        gpsTracker = new Tracker(mContext);
         // }
 
         if (gpsTracker.canGetLocation()) {
@@ -101,30 +99,15 @@ public class DataHandler {
         }
     }
 
-    public void startAsyncTask(){
+    public void startAsyncTask() {
         URL = HTTP + user_address + API_KEY;
         new getAddressCoordinates().execute(URL);
     }
 
-    public void startLIRR_AsyncTask(){
-        if (stationList == null) {
+    public void startLIRR_AsyncTask() {
+        if (stationList.size() == 0) {
             new getStations().execute(LIRR_API_SEARCH);
         }
-    }
-
-    public Double calcDistance(LatLng start, LatLng end) {
-
-        final int R = 6371; // Radius of the earth
-        Double latDistance = toRad(end.latitude - start.latitude);
-        Double lonDistance = toRad(end.longitude - start.longitude);
-        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) +
-                Math.cos(toRad(start.latitude)) * Math.cos(toRad(end.latitude)) *
-                        Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        Double distance = R * c;
-        distance = round(distance, 4);
-
-        return distance;
     }
 
     public static double round(double value, int places) {
@@ -135,10 +118,6 @@ public class DataHandler {
         return bd.doubleValue();
     }
 
-    private static Double toRad(Double value) {
-        return value * Math.PI / 180;
-    }
-
     public class CounterClass extends CountDownTimer {
         public CounterClass(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
@@ -147,14 +126,11 @@ public class DataHandler {
         @Override
         public void onTick(long millisUntilFinished) {
             getLocation();
-            //distanceFromDest = calcDistance(userDestination, userLocation);
 
-            float distanceToDest = myLocation.distanceTo(myDestination);
+            distanceToDest = myLocation.distanceTo(myDestination);
 
-            Toast.makeText(mContext, "User Coordinates:\n" +
-                    "Latitude: "+ userLat + "\n" +
-                    "Longitude: " + userLon+ "\n" +
-                    "Distance to Dest: " + distanceToDest + " meters", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext,
+                    "Distance to Dest: " + round(distanceToDest, 2) + " meters", Toast.LENGTH_SHORT).show();
 
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             builder.include(userLocation);
@@ -166,16 +142,29 @@ public class DataHandler {
             MainActivity.mapFrag.getMapAsync(new OnMapReadyCallback() {
                 @Override
                 public void onMapReady(GoogleMap map) {
+                    map.clear();
                     map.moveCamera(cu);
+
+                    map.addMarker(new MarkerOptions()
+                            .title("You are Here")
+                            .position(userLocation));
+
+                    map.addMarker(new MarkerOptions()
+                            .title("Your Destination")
+                            .position(userDestination));
                 }
             });
 
-            if (distanceToDest <= 0.1){
+            if (distanceToDest <= 1000) {
                 updater.cancel();
 
+                v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+                long[] pattern = {0, 10000, 1000};
+
                 Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-                MP = MediaPlayer.create(mContext, alert);
-                MP.start();
+                r = RingtoneManager.getRingtone(mContext, alert);
+                r.play();
+                v.vibrate(pattern, 0);
             }
         }
 
@@ -185,13 +174,13 @@ public class DataHandler {
         }
     }
 
-    public void setUpdater(){
+    public void setUpdater() {
 
         updater = new CounterClass(600000, 10000);
 
     }
 
-    public Location setMyDestination(){
+    public Location setMyDestination() {
 
         myDestination = new Location("");
         myDestination.setLatitude(destinationLat);
@@ -274,7 +263,7 @@ public class DataHandler {
                                 .title("Your Destination")
                                 .position(userDestination));
 
-                        Toast.makeText(mContext, "Your Destination Location", Toast.LENGTH_LONG).show();
+                        Toast.makeText(mContext, "Your Destination Location", Toast.LENGTH_SHORT).show();
                         setUpdater();
                     }
                 });
@@ -337,10 +326,29 @@ public class DataHandler {
                 JSONObject json = new JSONObject(result);
                 JSONObject stations = json.getJSONObject("Stations");
 
+                Iterator<String> keys = stations.keys();
 
+                while(keys.hasNext()){
+                    JSONObject station = stations.getJSONObject(keys.next());
+                    //Log.d("STATION", station.getString("NAME"));
 
+                    String s = station.getString("LATITUDE");
 
+                    if (!s.equals("null")) {
 
+                        String name = station.getString("NAME");
+                        String lat = station.getString("LATITUDE");
+                        String lon = station.getString("LONGITUDE");
+                        //Log.d("STATIONS", stationList.size() + name);
+
+                        Double LAT = Double.parseDouble(lat);
+                        Double LON = Double.parseDouble(lon);
+
+                        addStation(name, LAT, LON);
+                    }
+
+                }
+                Log.d("STATIONS", stationList.size() + "" );
 
             } catch (Exception e) {
                 e.printStackTrace();
