@@ -74,6 +74,8 @@ public class DestinationCoordinates extends DialogFragment{
 
                                         Toast.makeText(DH.mContext, "Your Destination Location", Toast.LENGTH_LONG).show();
 
+                                        DH.alarmDistance = 500;
+
                                         DH.setUpdater();
                                     }
                                 });

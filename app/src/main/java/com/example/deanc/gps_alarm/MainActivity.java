@@ -1,6 +1,5 @@
 package com.example.deanc.gps_alarm;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -25,8 +24,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         DH = DataHandler.getInstance();
         DH.mContext = getBaseContext();
@@ -101,7 +98,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
 
                 DH.userDestination = null;
-                
+
                 if (DH.updater != null) DH.updater.cancel();
 
                 if (DH.v != null) {
@@ -123,7 +120,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 });
             }
         });
-
 
     }
 

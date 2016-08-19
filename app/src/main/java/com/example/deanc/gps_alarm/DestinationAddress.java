@@ -14,7 +14,7 @@ import android.widget.EditText;
 /**
  * Created by DeanC on 8/12/2016.
  */
-public class DestinationAddress extends DialogFragment{
+public class DestinationAddress extends DialogFragment {
 
     DataHandler DH;
 
@@ -34,15 +34,15 @@ public class DestinationAddress extends DialogFragment{
         zip = (EditText) v.findViewById(R.id.zip_entry);
 
         street.requestFocus();
-        state.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+        state.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
         zip.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         AlertDialog.Builder b;
         b = new AlertDialog.Builder(getActivity());
         b.setView(v)
 
-                .setPositiveButton("OK",
-                        new DialogInterface.OnClickListener() {
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
                             public void onClick(DialogInterface dialog, int whichButton) {
 
                                 String strt, c, sta, z, full_address;
@@ -54,6 +54,8 @@ public class DestinationAddress extends DialogFragment{
 
                                 full_address = strt + ",+" + c + ",+" + sta + ",+" + z;
                                 DH.user_address = full_address.replace(' ', '+');
+
+                                DH.alarmDistance = 500;
 
                                 DH.startAsyncTask();
 

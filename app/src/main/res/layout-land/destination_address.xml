@@ -7,6 +7,7 @@
     android:background="#ededed"
     android:orientation="vertical">
 
+
     <TextView
         android:id="@+id/street_title"
         android:layout_width="match_parent"
@@ -21,7 +22,6 @@
         android:id="@+id/street_entry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center"
         android:textColor="#000000"
         android:textSize="15sp" />
@@ -30,7 +30,6 @@
         android:id="@+id/city_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="City"
         android:textColor="#000000"
@@ -40,7 +39,6 @@
         android:id="@+id/city_entry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center"
         android:textColor="#000000"
         android:textSize="15sp" />
@@ -49,10 +47,7 @@
         android:id="@+id/state_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
         android:text="State"
         android:textColor="#000000"
         android:textSize="15sp" />
@@ -61,7 +56,6 @@
         android:id="@+id/state_entry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center"
         android:textColor="#000000"
         android:textSize="15sp" />
@@ -70,7 +64,6 @@
         android:id="@+id/zip_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="Zip"
         android:textColor="#000000"
@@ -80,7 +73,6 @@
         android:id="@+id/zip_entry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center"
         android:textColor="#000000"
         android:textSize="15sp" />

@@ -6,13 +6,24 @@
     android:layout_gravity="center"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="Pick The Station&#10;You Must Get Off At&#10;Including Transfers!"
+        android:textColor="#ff0000"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <Spinner
         android:id="@+id/lirr_station_list_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
-        >
+        android:layout_marginTop="5dp"
+        android:gravity="center">
 
     </Spinner>
 

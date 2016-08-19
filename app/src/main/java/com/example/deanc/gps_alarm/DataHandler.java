@@ -47,6 +47,7 @@ public class DataHandler {
 
     public Double userLat, userLon, destinationLat, destinationLon;
     double distanceToDest;
+    public int alarmDistance;
     public String user_address;
     LatLng userLocation, userDestination;
     String URL;
@@ -118,6 +119,13 @@ public class DataHandler {
         return bd.doubleValue();
     }
 
+    public double metersToMiles (double value){
+        double km = value / 1000;
+        double mile = km * 0.621371;
+
+        return round(mile, 2);
+    }
+
     public class CounterClass extends CountDownTimer {
         public CounterClass(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
@@ -130,7 +138,7 @@ public class DataHandler {
             distanceToDest = myLocation.distanceTo(myDestination);
 
             Toast.makeText(mContext,
-                    "Distance to Dest: " + round(distanceToDest, 2) + " meters", Toast.LENGTH_SHORT).show();
+                    "Distance to Dest: " + metersToMiles(distanceToDest) + " miles", Toast.LENGTH_SHORT).show();
 
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             builder.include(userLocation);
@@ -155,7 +163,7 @@ public class DataHandler {
                 }
             });
 
-            if (distanceToDest <= 1000) {
+            if (distanceToDest <= alarmDistance) {
                 updater.cancel();
 
                 v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
@@ -263,7 +271,7 @@ public class DataHandler {
                                 .title("Your Destination")
                                 .position(userDestination));
 
-                        Toast.makeText(mContext, "Your Destination Location", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Your Destination Location", Toast.LENGTH_LONG).show();
                         setUpdater();
                     }
                 });

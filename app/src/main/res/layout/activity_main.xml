@@ -18,25 +18,25 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/coordinates"
+            android:id="@+id/destination"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_buttons"
-            android:text="Destination&#10;Coordinates"
+            android:text="Destination&#10;Address"
             android:textAllCaps="false"
             android:textColor="#ffffff" />
 
         <Button
-            android:id="@+id/destination"
+            android:id="@+id/coordinates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_buttons"
-            android:text="Destination&#10;Address"
+            android:text="Destination&#10;Coordinates"
             android:textAllCaps="false"
             android:textColor="#ffffff" />
 
