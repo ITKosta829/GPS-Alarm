@@ -81,9 +81,8 @@ public class DataHandler {
     }
 
     public void getLocation() {
-        // if (gpsTracker == null) {
+
         gpsTracker = new Tracker(mContext);
-        // }
 
         if (gpsTracker.canGetLocation()) {
 

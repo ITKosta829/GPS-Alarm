@@ -26,7 +26,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_main);
 
         DH = DataHandler.getInstance();
-        DH.mContext = getBaseContext();
+        DH.mContext = MainActivity.this;
 
         mapFrag = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
