@@ -57,6 +57,7 @@ public class Tracker extends Service implements LocationListener {
             locationManager = (LocationManager) mContext
                     .getSystemService(LOCATION_SERVICE);
 
+
             // getting GPS status
             isGPSEnabled = locationManager
                     .isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -70,13 +71,12 @@ public class Tracker extends Service implements LocationListener {
             } else {
                 this.canGetLocation = true;
                 if (isNetworkEnabled) {
-                    if (android.os.Build.VERSION.SDK_INT == 23)
+                    if (android.os.Build.VERSION.SDK_INT >= 23)
                         if (ActivityCompat.checkSelfPermission(this.mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             // TODO: Consider calling
-                            //    ActivityCompat#requestPermissions
+                            // ActivityCompat#requestPermissions
                             // here to request the missing permissions, and then overriding
-                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                            //                                          int[] grantResults)
+                            // public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
                             // to handle the case where the user grants the permission. See the documentation
                             // for ActivityCompat#requestPermissions for more details.
                             return null;
@@ -210,6 +210,9 @@ public class Tracker extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+        Log.d("MyTag", "Location Changed");
+        Log.d("MyTag", "User Lat: " + location.getLatitude());
+        Log.d("MyTag", "User Lon: " + location.getLongitude());
     }
 
     @Override

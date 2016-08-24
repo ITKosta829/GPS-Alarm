@@ -3,16 +3,22 @@ package com.example.deanc.gps_alarm;
 /**
  * Created by DeanC on 8/17/2016.
  */
-public class LIRR_Station {
+public class TrainStation {
 
     String NAME;
+    String CODE;
     Double LAT;
     Double LON;
 
-    public LIRR_Station(String NAME, Double LAT, Double LON) {
+    public TrainStation(String NAME, Double LAT, Double LON) {
         this.NAME = NAME;
         this.LAT = LAT;
         this.LON = LON;
+    }
+
+    public TrainStation(String NAME, String CODE, Double LAT, Double LON) {
+        this(NAME, LAT, LON);
+        this.CODE = CODE;
     }
 
     public String getNAME() {
@@ -37,5 +43,13 @@ public class LIRR_Station {
 
     public void setLON(Double LON) {
         this.LON = LON;
+    }
+
+    public String getCODE() {
+        return CODE;
+    }
+
+    public void setCODE(String CODE) {
+        this.CODE = CODE;
     }
 }

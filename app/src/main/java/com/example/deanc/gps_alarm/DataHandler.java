@@ -1,13 +1,19 @@
 package com.example.deanc.gps_alarm;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -43,7 +49,8 @@ public class DataHandler {
     protected static final String API_KEY = "&key=AIzaSyDvSzZs2vIJzot6RrRfPwlBWStLLTrkijY";
     protected static final String LIRR_API_SEARCH = "https://traintime.lirr.org/api/StationsAll?api_key=f63af35c0bc02d01bf133806cb469aad";
 
-    private List<LIRR_Station> stationList;
+    private List<TrainStation> LIRR_Station_List;
+    private List<TrainStation> Amtrak_Station_List;
 
     public Double userLat, userLon, destinationLat, destinationLon;
     double distanceToDest;
@@ -64,20 +71,30 @@ public class DataHandler {
     private static DataHandler instance = new DataHandler();
 
     private DataHandler() {
-        stationList = new ArrayList<>();
+        LIRR_Station_List = new ArrayList<>();
+        Amtrak_Station_List = new ArrayList<>();
     }
 
     public static DataHandler getInstance() {
         return instance;
     }
 
-    public List<LIRR_Station> getAllStations() {
-        return stationList;
+    public List<TrainStation> getAllStations_LIRR() {
+        return LIRR_Station_List;
     }
 
-    public void addStation(String name, Double lat, Double lon) {
-        LIRR_Station station = new LIRR_Station(name, lat, lon);
-        stationList.add(station);
+    public void addStation_LIRR(String name, Double lat, Double lon) {
+        TrainStation station = new TrainStation(name, lat, lon);
+        LIRR_Station_List.add(station);
+    }
+
+    public List<TrainStation> getAllStations_Amtrak() {
+        return Amtrak_Station_List;
+    }
+
+    public void addAmtrakStation(String name, String code, Double lat, Double lon) {
+        TrainStation station = new TrainStation(name, code, lat, lon);
+        Amtrak_Station_List.add(station);
     }
 
     public void getLocation() {
@@ -105,7 +122,7 @@ public class DataHandler {
     }
 
     public void startLIRR_AsyncTask() {
-        if (stationList.size() == 0) {
+        if (LIRR_Station_List.size() == 0) {
             new getStations().execute(LIRR_API_SEARCH);
         }
     }
@@ -346,20 +363,29 @@ public class DataHandler {
                         String name = station.getString("NAME");
                         String lat = station.getString("LATITUDE");
                         String lon = station.getString("LONGITUDE");
-                        //Log.d("STATIONS", stationList.size() + name);
+                        Log.d("STATIONS", LIRR_Station_List.size() + name);
 
                         Double LAT = Double.parseDouble(lat);
                         Double LON = Double.parseDouble(lon);
 
-                        addStation(name, LAT, LON);
+                        addStation_LIRR(name, LAT, LON);
                     }
 
                 }
-                Log.d("STATIONS", stationList.size() + "" );
+                Log.d("STATIONS", LIRR_Station_List.size() + "" );
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void populateAmtrakList(){
+        // No API currently exists which contains all of the Amtrak Station data - 8/23/2016
+        // Following website used for Station Info.
+        // http://www.ensingers.com/Bill222E/gpsamtrak.html
+        // as well as https://www.amtrak.com/html/stations_A.html
+        // for verification.
+
     }
 }

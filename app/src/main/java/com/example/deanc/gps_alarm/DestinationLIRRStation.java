@@ -41,8 +41,8 @@ public class DestinationLIRRStation extends DialogFragment {
 
         ArrayList<String> stations = new ArrayList<>();
 
-        for (int a = 0; a < DH.getAllStations().size(); a++) {
-            stations.add(DH.getAllStations().get(a).getNAME());
+        for (int a = 0; a < DH.getAllStations_LIRR().size(); a++) {
+            stations.add(DH.getAllStations_LIRR().get(a).getNAME());
         }
 
         final Spinner spinner = (Spinner) v.findViewById(R.id.lirr_station_list_spinner);
@@ -75,8 +75,8 @@ public class DestinationLIRRStation extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
 
-                                DH.destinationLat = DH.getAllStations().get(position).getLAT();
-                                DH.destinationLon = DH.getAllStations().get(position).getLON();
+                                DH.destinationLat = DH.getAllStations_LIRR().get(position).getLAT();
+                                DH.destinationLon = DH.getAllStations_LIRR().get(position).getLON();
 
                                 DH.userDestination = new LatLng(DH.destinationLat, DH.destinationLon);
 
