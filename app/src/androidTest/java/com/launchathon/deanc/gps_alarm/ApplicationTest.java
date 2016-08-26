@@ -1,4 +1,4 @@
-package com.example.deanc.gps_alarm;
+package com.launchathon.deanc.gps_alarm;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

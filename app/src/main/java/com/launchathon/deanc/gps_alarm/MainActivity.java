@@ -1,4 +1,4 @@
-package com.example.deanc.gps_alarm;
+package com.launchathon.deanc.gps_alarm;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -6,9 +6,9 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.PopupMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
     public static MapFragment mapFrag;
-    Button destinationAddress, destinationCoordinates, start_tracking, cancel, lirr;
+    Button destinationAddress, extras, start_tracking, cancel, lirr;
     DataHandler DH;
     GoogleMap map;
 
@@ -41,7 +41,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mapFrag = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
         destinationAddress = (Button) findViewById(R.id.destination);
-        destinationCoordinates = (Button) findViewById(R.id.coordinates);
+        extras = (Button) findViewById(R.id.extras);
         start_tracking = (Button) findViewById(R.id.start_tracking);
         lirr = (Button) findViewById(R.id.lirr);
         cancel = (Button) findViewById(R.id.cancel);
@@ -69,12 +69,43 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        destinationCoordinates.setOnClickListener(new View.OnClickListener() {
+        extras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DestinationCoordinates DC = new DestinationCoordinates();
-                DC.show(getFragmentManager(), "display");
-                start_tracking.setEnabled(true);
+
+                PopupMenu popup = new PopupMenu(MainActivity.this, extras);
+                popup.getMenuInflater().inflate(R.menu.menu, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getItemId()){
+                            case R.id.coordinates:
+                                DestinationCoordinates DC = new DestinationCoordinates();
+                                DC.show(getFragmentManager(), "display");
+                                break;
+                            case R.id.read_me:
+                                AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
+                                adb.setTitle("App Info");
+                                adb.setMessage("Thank you for trying my app.\n\n" +
+                                        "Default GPS Alarm triggers are as follows:\n\n" +
+                                        "LIRR tracking will activate within 1 mile of destination.\n\n" +
+                                        "Address and Coordinates tracking will activate within 1/3 of a mile.\n\n" +
+                                        "If there are any questions or comments please feel free to e-mail me.");
+                                adb.setPositiveButton("OK", new AlertDialog.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                                adb.show();
+                                break;
+                            default:
+                                return true;
+                        }
+                        return true;
+                    }
+                });
+                popup.show(); //showing popup menu
             }
         });
 

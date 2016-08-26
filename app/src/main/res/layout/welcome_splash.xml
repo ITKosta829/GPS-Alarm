@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c1b071">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:textColor="#237abf"
+        android:text="Nap-N-Ride"
+        android:textStyle="bold"
+        android:textSize="40sp" />
+
+    <View
+        android:id="@+id/circle_button"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/circle" />
+
+    <TextView
+        android:id="@+id/start_journey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/circle_button"
+        android:layout_alignEnd="@+id/circle_button"
+        android:layout_alignStart="@+id/circle_button"
+        android:layout_alignTop="@+id/circle_button"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="Start&#10;Journey"
+        android:textColor="#237abf"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

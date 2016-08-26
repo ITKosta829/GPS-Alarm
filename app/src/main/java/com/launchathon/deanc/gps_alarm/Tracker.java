@@ -1,4 +1,4 @@
-package com.example.deanc.gps_alarm;
+package com.launchathon.deanc.gps_alarm;
 
 /**
  * Created by isel1 on 1/20/15.

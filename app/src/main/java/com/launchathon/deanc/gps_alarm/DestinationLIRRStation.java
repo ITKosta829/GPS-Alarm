@@ -1,4 +1,4 @@
-package com.example.deanc.gps_alarm;
+package com.launchathon.deanc.gps_alarm;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -94,7 +94,7 @@ public class DestinationLIRRStation extends DialogFragment {
 
                                         Toast.makeText(DH.mContext, "Your Destination Location", Toast.LENGTH_LONG).show();
 
-                                        DH.alarmDistance = 1500;
+                                        DH.alarmDistance = 1609;
 
                                         DH.setUpdater();
                                     }

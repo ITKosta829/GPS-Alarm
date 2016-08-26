@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.deanc.gps_alarm.MainActivity">
+    tools:context="com.launchathon.deanc.gps_alarm.MainActivity">
 
     <LinearLayout
         android:id="@+id/upperButtonRow"
@@ -18,10 +18,25 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/lirr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_buttons"
+            android:gravity="center"
+            android:text="Destination&#10;LIRR Station"
+            android:textAllCaps="false"
+            android:textColor="#ffffff" />
+
+        <Button
             android:id="@+id/destination"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_buttons"
             android:text="Destination&#10;Address"
@@ -29,28 +44,17 @@
             android:textColor="#ffffff" />
 
         <Button
-            android:id="@+id/coordinates"
+            android:id="@+id/extras"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_buttons"
-            android:text="Destination&#10;Coordinates"
+            android:text="Extras"
             android:textAllCaps="false"
             android:textColor="#ffffff" />
 
-        <Button
-            android:id="@+id/lirr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_buttons"
-            android:gravity="center"
-            android:text="Destination&#10;LIRR Station"
-            android:textAllCaps="false"
-            android:textColor="#ffffff" />
 
     </LinearLayout>
 
@@ -75,6 +79,7 @@
             android:id="@+id/start_tracking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_buttons"
@@ -86,6 +91,7 @@
             android:id="@+id/cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_buttons"
