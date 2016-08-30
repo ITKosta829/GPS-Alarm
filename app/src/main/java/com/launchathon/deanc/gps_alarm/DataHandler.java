@@ -2,6 +2,7 @@ package com.launchathon.deanc.gps_alarm;
 
 import android.content.Context;
 import android.location.Location;
+import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -54,6 +55,7 @@ public class DataHandler {
     String URL;
     public Ringtone r;
     public Vibrator v;
+    AudioManager am;
 
     public CounterClass updater;
     public Context mContext;
@@ -175,6 +177,9 @@ public class DataHandler {
 
             if (distanceToDest <= alarmDistance) {
                 updater.cancel();
+
+                am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+                am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
 
                 v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
                 long[] pattern = {0, 10000, 1000};

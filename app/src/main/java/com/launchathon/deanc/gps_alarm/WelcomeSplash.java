@@ -12,7 +12,7 @@ import android.widget.TextView;
  */
 public class WelcomeSplash extends Activity {
 
-    TextView start;
+    TextView start, title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +35,14 @@ public class WelcomeSplash extends Activity {
     }
 
     public void setFonts() {
-        Typeface tf = Typeface.createFromAsset(getBaseContext().getAssets(), "ANDYB.TTF");
+        Typeface tf = Typeface.createFromAsset(getBaseContext().getAssets(), "BernModB.ttf");
 
-        TextView tv1 = (TextView)findViewById(R.id.start_journey);
-        tv1.setTypeface(tf);
-        tv1.setTextSize(40);
+        start.setTypeface(tf);
+        start.setTextSize(40);
 
-        TextView tv2 = (TextView) findViewById(R.id.title);
-        tv2.setTypeface(tf);
-        tv2.setTextSize(40);
+        title = (TextView) findViewById(R.id.title);
+        title.setTypeface(tf);
+        title.setTextSize(40);
 
 
     }

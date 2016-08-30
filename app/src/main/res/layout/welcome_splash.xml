@@ -2,7 +2,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#c1b071">
+    android:background="#313443">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/clouds"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/square" />
+
+    <ImageView
+        android:id="@+id/clouds"
+        android:layout_width="464dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="35dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/clouds" />
 
     <TextView
         android:id="@+id/title"
@@ -11,10 +27,10 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:textColor="#237abf"
         android:text="Nap-N-Ride"
-        android:textStyle="bold"
-        android:textSize="40sp" />
+        android:textColor="#237abf"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
     <View
         android:id="@+id/circle_button"
@@ -35,7 +51,7 @@
         android:layout_alignTop="@+id/circle_button"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Start&#10;Journey"
+        android:text="start your&#10;journey"
         android:textColor="#237abf"
         android:textSize="40sp"
         android:textStyle="bold" />
