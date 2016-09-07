@@ -4,9 +4,12 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
     public static MapFragment mapFrag;
-    Button destinationAddress, extras, start_tracking, cancel, lirr;
+    public static Button destinationAddress, extras, start_tracking, cancel, lirr;
     DataHandler DH;
     GoogleMap map;
 
@@ -45,7 +48,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         start_tracking = (Button) findViewById(R.id.start_tracking);
         lirr = (Button) findViewById(R.id.lirr);
         cancel = (Button) findViewById(R.id.cancel);
-        start_tracking.setEnabled(false);
+        //start_tracking.setEnabled(false);
+        start_tracking.setVisibility(View.INVISIBLE);
+        cancel.setVisibility(View.INVISIBLE);
+
 
         mapFrag.getMapAsync(this);
 
@@ -56,7 +62,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 DestinationLIRRStation DLR = new DestinationLIRRStation();
                 DLR.show(getFragmentManager(), "display");
-                start_tracking.setEnabled(true);
+                //start_tracking.setEnabled(true);
             }
         });
 
@@ -65,7 +71,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 DestinationAddress destinationAddress = new DestinationAddress();
                 destinationAddress.show(getFragmentManager(), "display");
-                start_tracking.setEnabled(true);
+                //start_tracking.setEnabled(true);
             }
         });
 
@@ -105,7 +111,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                         return true;
                     }
                 });
-                popup.show(); //showing popup menu
+                popup.show();
             }
         });
 
@@ -129,6 +135,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                             map.moveCamera(cu);
                         }
                     });
+
+                    start_tracking.setBackground(ContextCompat.getDrawable(DH.mContext, R.drawable.black_rounded_button));
+                    cancel.setVisibility(View.VISIBLE);
+                    cancel.setBackground(ContextCompat.getDrawable(DH.mContext, R.drawable.red_rounded_button));
                 }
             }
         });
@@ -144,6 +154,15 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 if (DH.v != null) {
                     DH.v.cancel();
                     DH.r.stop();
+
+                    if (android.os.Build.VERSION.SDK_INT >= 23){
+                        if (DH.DnD == 0){
+                            DH.am.setStreamVolume(AudioManager.STREAM_RING, DH.originalVolume, 0);
+
+                        }
+                    }else {
+                        DH.am.setStreamVolume(AudioManager.STREAM_RING, DH.originalVolume, 0);
+                    }
                 }
 
                 mapFrag.getMapAsync(new OnMapReadyCallback() {
@@ -158,6 +177,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
                     }
                 });
+
+                cancel.setBackground(ContextCompat.getDrawable(DH.mContext, R.drawable.black_rounded_button));
+                start_tracking.setVisibility(View.INVISIBLE);
+                cancel.setVisibility(View.INVISIBLE);
             }
         });
 

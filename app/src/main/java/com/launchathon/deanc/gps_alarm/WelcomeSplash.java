@@ -2,6 +2,7 @@ package com.launchathon.deanc.gps_alarm;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -12,12 +13,14 @@ import android.widget.TextView;
  */
 public class WelcomeSplash extends Activity {
 
-    TextView start, title;
+    TextView start, title, message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_splash);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         start = (TextView) findViewById(R.id.start_journey);
 
@@ -42,7 +45,13 @@ public class WelcomeSplash extends Activity {
 
         title = (TextView) findViewById(R.id.title);
         title.setTypeface(tf);
-        title.setTextSize(40);
+        title.setTextSize(50);
+
+        message = (TextView) findViewById(R.id.message);
+        message.setTypeface(tf);
+        message.setTextSize(30);
+
+
 
 
     }

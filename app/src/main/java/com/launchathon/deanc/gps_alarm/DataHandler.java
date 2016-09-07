@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -55,7 +56,8 @@ public class DataHandler {
     String URL;
     public Ringtone r;
     public Vibrator v;
-    AudioManager am;
+    public AudioManager am;
+    public int originalVolume, DnD;
 
     public CounterClass updater;
     public Context mContext;
@@ -179,12 +181,29 @@ public class DataHandler {
                 updater.cancel();
 
                 am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
-                am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+
+                try {
+                    DnD = Settings.Global.getInt(mContext.getContentResolver(), "zen_mode");
+                } catch (Settings.SettingNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                if (android.os.Build.VERSION.SDK_INT >= 23){
+                    if (DnD == 0){
+                        am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                        originalVolume = am.getStreamVolume(AudioManager.STREAM_RING);
+                        am.setStreamVolume(AudioManager.STREAM_RING, am.getStreamMaxVolume(AudioManager.STREAM_RING), 0);
+                    }
+                }else {
+                    am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                    originalVolume = am.getStreamVolume(AudioManager.STREAM_RING);
+                    am.setStreamVolume(AudioManager.STREAM_RING, am.getStreamMaxVolume(AudioManager.STREAM_RING), 0);
+                }
 
                 v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
                 long[] pattern = {0, 10000, 1000};
 
-                Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+                Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
                 r = RingtoneManager.getRingtone(mContext, alert);
                 r.play();
                 v.vibrate(pattern, 0);

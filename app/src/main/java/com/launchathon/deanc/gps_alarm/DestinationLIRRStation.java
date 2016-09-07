@@ -5,11 +5,13 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 public class DestinationLIRRStation extends DialogFragment {
 
     DataHandler DH;
+    Button button;
 
     String selectedName;
     int position;
@@ -38,6 +41,7 @@ public class DestinationLIRRStation extends DialogFragment {
         View v = i.inflate(R.layout.destination_lirr_station, null);
 
         DH = DataHandler.getInstance();
+
 
         ArrayList<String> stations = new ArrayList<>();
 
@@ -97,6 +101,9 @@ public class DestinationLIRRStation extends DialogFragment {
                                         DH.alarmDistance = 1609;
 
                                         DH.setUpdater();
+
+                                        MainActivity.start_tracking.setVisibility(View.VISIBLE);
+                                        MainActivity.start_tracking.setBackground(ContextCompat.getDrawable(DH.mContext, R.drawable.green_rounded_button));
                                     }
                                 });
 

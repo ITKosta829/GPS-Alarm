@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#313443">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_below="@+id/clouds"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/square" />
+    android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/clouds"
-        android:layout_width="464dp"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="35dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/clouds" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/star_sky2" />
 
     <TextView
         android:id="@+id/title"
@@ -26,34 +16,46 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:text="Nap-N-Ride"
         android:textColor="#237abf"
         android:textSize="40sp"
         android:textStyle="bold" />
 
-    <View
-        android:id="@+id/circle_button"
+    <ImageView
+        android:id="@+id/moon"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/circle" />
+        android:layout_centerVertical="true"
+        android:src="@drawable/moon_300x300" />
 
     <TextView
         android:id="@+id/start_journey"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/circle_button"
-        android:layout_alignEnd="@+id/circle_button"
-        android:layout_alignStart="@+id/circle_button"
-        android:layout_alignTop="@+id/circle_button"
+        android:layout_alignBottom="@+id/moon"
+        android:layout_alignEnd="@+id/moon"
+        android:layout_alignStart="@+id/moon"
+        android:layout_alignTop="@+id/moon"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="start your&#10;journey"
-        android:textColor="#237abf"
+        android:textColor="#b5d7f1"
         android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="relax and leave the&#10;traveling to us"
+        android:textColor="#237abf"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
 </RelativeLayout>

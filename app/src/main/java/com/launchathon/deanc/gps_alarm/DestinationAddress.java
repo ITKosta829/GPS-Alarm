@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -58,6 +59,9 @@ public class DestinationAddress extends DialogFragment {
                                 DH.alarmDistance = 500;
 
                                 DH.startAsyncTask();
+
+                                MainActivity.start_tracking.setVisibility(View.VISIBLE);
+                                MainActivity.start_tracking.setBackground(ContextCompat.getDrawable(DH.mContext, R.drawable.green_rounded_button));
 
                                 dialog.dismiss();
                             }

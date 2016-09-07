@@ -24,7 +24,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_buttons"
+            android:background="@drawable/black_rounded_button"
             android:gravity="center"
             android:text="Destination&#10;LIRR Station"
             android:textAllCaps="false"
@@ -38,7 +38,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_buttons"
+            android:background="@drawable/black_rounded_button"
             android:text="Destination&#10;Address"
             android:textAllCaps="false"
             android:textColor="#ffffff" />
@@ -50,7 +50,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_buttons"
+            android:background="@drawable/black_rounded_button"
             android:text="Extras"
             android:textAllCaps="false"
             android:textColor="#ffffff" />
@@ -82,7 +82,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_buttons"
+            android:background="@drawable/black_rounded_button"
             android:text="@string/track_my_location_and_set_alarm"
             android:textAllCaps="false"
             android:textColor="#ffffff" />
@@ -94,7 +94,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_buttons"
+            android:background="@drawable/black_rounded_button"
             android:text="Cancel Alarm"
             android:textAllCaps="false"
             android:textColor="#ffffff" />

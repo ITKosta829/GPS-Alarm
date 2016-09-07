@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -73,6 +74,9 @@ public class DestinationCoordinates extends DialogFragment{
                                         DH.alarmDistance = 500;
 
                                         DH.setUpdater();
+
+                                        MainActivity.start_tracking.setVisibility(View.VISIBLE);
+                                        MainActivity.start_tracking.setBackground(ContextCompat.getDrawable(DH.mContext, R.drawable.green_rounded_button));
                                     }
                                 });
 
