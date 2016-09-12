@@ -50,6 +50,22 @@
             android:layout_height="25dp"
             android:layout_weight="1" />
 
+        <Button
+            android:id="@+id/extras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/black_rounded_button"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="Extras"
+            android:textAllCaps="false"
+            android:textColor="#ffffff" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/start_tracking"
@@ -68,7 +84,6 @@
             android:layout_height="25dp"
             android:layout_weight="1" />
 
-
         <Button
             android:id="@+id/cancel"
             android:layout_width="match_parent"
@@ -80,24 +95,6 @@
             android:text="Cancel Alarm"
             android:textAllCaps="false"
             android:textColor="#ffffff" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/extras"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/black_rounded_button"
-            android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="Extras"
-            android:textAllCaps="false"
-            android:textColor="#ffffff" />
-
 
     </LinearLayout>
 

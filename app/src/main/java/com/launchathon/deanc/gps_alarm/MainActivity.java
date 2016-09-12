@@ -49,9 +49,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         lirr = (Button) findViewById(R.id.lirr);
         cancel = (Button) findViewById(R.id.cancel);
         //start_tracking.setEnabled(false);
-        start_tracking.setVisibility(View.INVISIBLE);
-        cancel.setVisibility(View.INVISIBLE);
 
+        if (DH.userDestination == null) {
+            start_tracking.setVisibility(View.INVISIBLE);
+            cancel.setVisibility(View.INVISIBLE);
+        }
+        if (DH.userDestination != null) cancel.setBackground(ContextCompat.getDrawable(DH.mContext, R.drawable.red_rounded_button));
 
         mapFrag.getMapAsync(this);
 
