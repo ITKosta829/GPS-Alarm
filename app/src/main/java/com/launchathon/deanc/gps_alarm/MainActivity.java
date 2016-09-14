@@ -65,7 +65,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 DestinationLIRRStation DLR = new DestinationLIRRStation();
                 DLR.show(getFragmentManager(), "display");
-                //start_tracking.setEnabled(true);
             }
         });
 
@@ -74,7 +73,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 DestinationAddress destinationAddress = new DestinationAddress();
                 destinationAddress.show(getFragmentManager(), "display");
-                //start_tracking.setEnabled(true);
             }
         });
 
@@ -96,8 +94,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                             case R.id.read_me:
                                 AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
                                 adb.setTitle("App Info");
-                                adb.setMessage("Thank you for trying my app.\n\n" +
-                                        "Default GPS Alarm triggers are as follows:\n\n" +
+                                adb.setMessage("Thank you for trying my app.  I designed it so you could " +
+                                        "take a trip someplace and take a nap without worrying about when to wake up.\n\n" +
+                                        "The default GPS Alarm triggers are as follows:\n\n" +
                                         "LIRR tracking will activate within 1 mile of destination.\n\n" +
                                         "Address and Coordinates tracking will activate within 1/3 of a mile.\n\n" +
                                         "If there are any questions or comments please feel free to e-mail me.");
@@ -156,12 +155,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
                 if (DH.v != null) {
                     DH.v.cancel();
-                    DH.r.stop();
+                    if (DH.r != null) DH.r.stop();
 
                     if (android.os.Build.VERSION.SDK_INT >= 23){
                         if (DH.DnD == 0){
                             DH.am.setStreamVolume(AudioManager.STREAM_RING, DH.originalVolume, 0);
-
                         }
                     }else {
                         DH.am.setStreamVolume(AudioManager.STREAM_RING, DH.originalVolume, 0);
@@ -173,7 +171,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onMapReady(GoogleMap map) {
                         map.clear();
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(DH.userLocation, 17));
-
                         map.addMarker(new MarkerOptions()
                                 .title("You are Here")
                                 .position(DH.userLocation));
@@ -202,10 +199,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (DH.userLocation == null) return;
 
-        // Focus map to particular place.
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(DH.userLocation, 17));
 
-        // Markers identify locations on the map.
         map.addMarker(new MarkerOptions()
                 .title("You are Here")
                 .position(DH.userLocation));
@@ -231,7 +226,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                             });
                     return;
                 }
-
 
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         REQUEST_CODE_ASK_PERMISSIONS);

@@ -46,24 +46,29 @@ public class DestinationAddress extends DialogFragment {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
 
-                                String strt, c, sta, z, full_address;
+                                String strt = street.getText().toString();
+                                String c = city.getText().toString();
+                                String sta = state.getText().toString();
+                                String z = zip.getText().toString();
 
-                                strt = street.getText().toString();
-                                c = city.getText().toString();
-                                sta = state.getText().toString();
-                                z = zip.getText().toString();
+                                if (strt.equals("") && c.equals("") && sta.equals("") && z.equals("")){
 
-                                full_address = strt + ",+" + c + ",+" + sta + ",+" + z;
-                                DH.user_address = full_address.replace(' ', '+');
+                                    dialog.dismiss();
 
-                                DH.alarmDistance = 500;
+                                } else {
 
-                                DH.startAsyncTask();
+                                    String full_address = strt + ",+" + c + ",+" + sta + ",+" + z;
+                                    DH.user_address = full_address.replace(' ', '+');
 
-                                MainActivity.start_tracking.setVisibility(View.VISIBLE);
-                                MainActivity.start_tracking.setBackground(ContextCompat.getDrawable(DH.mContext, R.drawable.green_rounded_button));
+                                    DH.alarmDistance = 500;
 
-                                dialog.dismiss();
+                                    DH.startAsyncTask();
+
+                                    MainActivity.start_tracking.setVisibility(View.VISIBLE);
+                                    MainActivity.start_tracking.setBackground(ContextCompat.getDrawable(DH.mContext, R.drawable.green_rounded_button));
+
+                                    dialog.dismiss();
+                                }
                             }
                         }
                 );

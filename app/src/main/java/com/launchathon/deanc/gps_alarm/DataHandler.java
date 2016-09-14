@@ -50,14 +50,13 @@ public class DataHandler {
 
     public Double userLat, userLon, destinationLat, destinationLon;
     double distanceToDest;
-    public int alarmDistance;
     public String user_address;
     LatLng userLocation, userDestination;
     String URL;
     public Ringtone r;
     public Vibrator v;
     public AudioManager am;
-    public int originalVolume, DnD;
+    public int originalVolume, DnD, alarmDistance;
 
     public CounterClass updater;
     public Context mContext;
@@ -205,7 +204,8 @@ public class DataHandler {
 
                 Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
                 r = RingtoneManager.getRingtone(mContext, alert);
-                r.play();
+
+                if (r != null) r.play();
                 v.vibrate(pattern, 0);
             }
         }

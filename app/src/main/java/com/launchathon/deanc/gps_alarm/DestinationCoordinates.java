@@ -47,40 +47,43 @@ public class DestinationCoordinates extends DialogFragment{
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
 
-                                String lat, lon;
+                                String lat = latitude.getText().toString();
+                                String lon = longitude.getText().toString();
 
-                                lat = latitude.getText().toString();
-                                lon = longitude.getText().toString();
+                                if (lat.equals("") || lon.equals("")){
 
-                                DH.destinationLat = Double.parseDouble(lat);
-                                DH.destinationLon = Double.parseDouble(lon);
+                                    dialog.dismiss();
 
-                                DH.userDestination = new LatLng(DH.destinationLat, DH.destinationLon);
+                                } else {
 
-                                DH.setMyDestination();
+                                    DH.destinationLat = Double.parseDouble(lat);
+                                    DH.destinationLon = Double.parseDouble(lon);
 
-                                MainActivity.mapFrag.getMapAsync(new OnMapReadyCallback() {
-                                    @Override
-                                    public void onMapReady(GoogleMap map) {
-                                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(DH.userDestination, 17));
+                                    DH.userDestination = new LatLng(DH.destinationLat, DH.destinationLon);
 
-                                        // Markers identify locations on the map.
-                                        map.addMarker(new MarkerOptions()
-                                                .title("Your Destination")
-                                                .position(DH.userDestination));
+                                    DH.setMyDestination();
 
-                                        Toast.makeText(DH.mContext, "Your Destination Location", Toast.LENGTH_LONG).show();
+                                    MainActivity.mapFrag.getMapAsync(new OnMapReadyCallback() {
+                                        @Override
+                                        public void onMapReady(GoogleMap map) {
+                                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(DH.userDestination, 17));
+                                            map.addMarker(new MarkerOptions()
+                                                    .title("Your Destination")
+                                                    .position(DH.userDestination));
 
-                                        DH.alarmDistance = 500;
+                                            Toast.makeText(DH.mContext, "Your Destination Location", Toast.LENGTH_LONG).show();
 
-                                        DH.setUpdater();
+                                            DH.alarmDistance = 500;
 
-                                        MainActivity.start_tracking.setVisibility(View.VISIBLE);
-                                        MainActivity.start_tracking.setBackground(ContextCompat.getDrawable(DH.mContext, R.drawable.green_rounded_button));
-                                    }
-                                });
+                                            DH.setUpdater();
 
-                                dialog.dismiss();
+                                            MainActivity.start_tracking.setVisibility(View.VISIBLE);
+                                            MainActivity.start_tracking.setBackground(ContextCompat.getDrawable(DH.mContext, R.drawable.green_rounded_button));
+                                        }
+                                    });
+
+                                    dialog.dismiss();
+                                }
                             }
                         }
                 );
